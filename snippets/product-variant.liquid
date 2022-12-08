@@ -1,0 +1,17 @@
+{% if product.variants.size > 1 %}
+    <div class="variant-select">
+      {% for product_option in product.options_with_values %}
+        <span>{{ product_option.name }} :</span>
+        <div class="selector-wrapper">
+          {% for value in product_option.values %}
+            <div>
+              <input type="radio" class="hide" id="{{ product_option.name | handleize }}-{{ value | handleize }}" value="{{ value }}" name="{{ product_option.name }}" {% if product_option.selected_value == value %}checked{% endif %}>
+              <label for="{{ product_option.name | handleize }}-{{ value | handleize }}" class="text-align-left">
+                {{ value }}
+              </label>
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}

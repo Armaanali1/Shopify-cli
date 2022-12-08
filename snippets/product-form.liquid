@@ -1,0 +1,109 @@
+{%- comment -%} <form action="/cart/add" method="post">
+    <input id="product-id" type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+   
+</form> {%- endcomment -%}
+{%- form 'product', product -%}
+    {% if product.has_only_default_variant %}
+        <input
+          class="variant-selection__variants variant-selection__variants--default"
+          name="id"
+          type="hidden"
+          value="{{ product.variants.first.id }}"
+          data-variants
+        >
+      {% else %}
+        <noscript>
+          <style>
+            .variant-selection__variants {
+              display: block !important;
+            }
+          </style>
+        </noscript>
+        <select
+          class="variant-selection__variants"
+          name="id"
+          style="display: none"
+          data-variants
+          id="product-id"
+        >
+          <option
+            value="not-selected"
+            disabled
+            {% if selected_variant == blank %}selected{% endif %}
+          >
+            {{ 'product.variants.choose_variant' | t }}
+          </option>
+          {% for variant in product.variants %}
+            <option
+              {% if selected_variant and selected_variant.id == variant.id %}selected{% endif %}
+              value="{{ variant.id }}"
+              {% unless variant.available %}disabled{% endunless %}
+            >
+              {{ variant.title }} - {{ variant.price | money }}
+            </option>
+          {% endfor %}
+        </select>
+    {% endif %}
+    <variants>
+        {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+          
+              {%- if settings.product_selector == 'radio' -%}
+                {%- comment -%} <fieldset id="ProductSelect-option-{{ forloop.index0 }}" name="{{ option.name | handleize }}">
+                  <legend>
+                    {{ option.name | escape }}
+                  </legend>
+                  {%- for value in option.values -%}
+                    <!-- Check to see if there's a product size option. If there is a size, check to see if there's any availble for purchase. If not, set the variat control in a "disabled" state. -->
+                    {%- assign variant_label_state = true -%}
+          
+                    {%- if product.options.size == 1 -%}
+                      {%- unless product.variants[forloop.index0].available -%}
+                        {%- assign variant_label_state = false -%}
+                      {%- endunless -%}
+                    {%- endif -%}
+          
+                    <input type="radio"
+                      {% if option.selected_value == value %} checked="checked"{% endif %}
+                      {% unless variant_label_state %} disabled="disabled"{% endunless %}
+                      value="{{ value | escape }}"
+                      data-index="option{{ forloop.index }}"
+                      name="{{ option.name | handleize }}"
+                      id="ProductSelect-option-{{ option.name | handleize }}-{{ value | escape }}">
+                    <label for="ProductSelect-option-{{ option.name | handleize }}-{{ value | escape }}">
+                      {{ value | escape }}
+                    </label>
+                  {%- endfor -%}
+                </fieldset> {%- endcomment -%}
+                {%- render 'product-variant' -%}
+              {%- else -%}
+                <label for="ProductSelect-option-{{ forloop.index0 }}">
+                  {{ option.name | escape }}
+                </label>
+                <select id="ProductSelect-{{ forloop.index0 }}" data-index="option{{ forloop.index }}">
+                  {%- for value in option.values -%}
+                    <option value="{{ value | escape }}"{% if option.selected_value == value %} selected="selected"{% endif %}>
+                      {{ value | escape }}
+                    </option>
+                  {%- endfor -%}
+                </select>
+              {%- endif -%}
+          
+            {%- endfor -%}
+          {%- endunless -%}
+    </variants>
+    <div class="form-inner">
+        <div class="quantity-area">
+            <label for="quantity">Qty :</label>
+            <div class="quantity-box">
+                <span class="control minus"><i class="fa-solid fa-minus"></i></span>
+                <input type="text" min="1" size="2" class="quantity" name="quantity" id="quantity" value="1"/>
+                <span class="control plus"><i class="fa-solid fa-plus"></i></span>
+            </div>
+        </div>
+        <button type="button" class="atc ajax-submit">
+            <span class="atc-text">Add to Cart</span>
+            <span class="submitted-text hide">Submitted</span>
+        </button>
+    </div>
+{%- endform -%}

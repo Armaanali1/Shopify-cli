@@ -1,0 +1,10 @@
+<div class="collection-product">
+    <a class="collection-product-image" href="{{ product.url | within: collection }}">
+        <img src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}">
+    </a>
+    <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
+    <div>{{ product.price | money }}</div>
+    {% render 'product-form',
+    product: product
+    %}
+</div>

@@ -1,0 +1,15 @@
+<div class="collection-page container">
+  {% paginate collection.products by 9 %}
+    <h1 class="heading text-align-center">{{ collection.title }}</h1>
+    <div class="collection-grid">
+      {% for product in collection.products %}
+        {% render 'card-product', product: product %}
+      {% endfor %}
+    </div>
+    {% if paginate.pages > 1 %}
+      <div class="pagination-links">
+        {{ paginate | default_pagination }}
+      </div>
+    {% endif %}
+  {% endpaginate %}
+</div>

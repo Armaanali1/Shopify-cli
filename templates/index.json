@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Featured Collection",
+        "collection": "all",
+        "limit_product": 6,
+        "quick_btn": true
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,30 @@
+<div class="header">
+    <div class="header-inner container">
+        <h1 class="header-logo"><a href="{{ shop.url }}"><img src="{{ section.settings.logo | img_url: 'master' }}"></a></h1>
+        <nav>
+            <ul class="is-flex">
+                {% for link in linklists[section.settings.menu].links %}
+                    <li><a href="{{ link.url }}" class="header-link">{{ link.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
+        <a class="header-link cart" href="/cart">Cart</a>
+    </div>
+</div>
+{%- schema -%}
+{
+    "name": "Header",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "logo",
+            "label": "Logo"
+        },
+        {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Menu"
+        }
+    ]
+}
+{%- endschema -%}
