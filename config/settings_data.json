@@ -8,6 +8,23 @@
           "logo": "shopify:\/\/shop_images\/logo.png",
           "menu": "vue-header-menu"
         }
+      },
+      "main_collection": {
+        "type": "main_collection",
+        "blocks": {
+          "e57b140c-f8a0-4ddf-aca6-088841315a9b": {
+            "type": "filter_tag",
+            "settings": {
+              "title": "Filter by",
+              "filter_tags": "test"
+            }
+          }
+        },
+        "block_order": [
+          "e57b140c-f8a0-4ddf-aca6-088841315a9b"
+        ],
+        "settings": {
+        }
       }
     },
     "content_for_index": [
