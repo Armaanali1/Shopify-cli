@@ -1,6 +1,10 @@
 <div class="collection-page container">
   {% paginate collection.products by 9 %}
     <h1 class="heading text-align-center">{{ collection.title }}</h1>
+    {% assign filter_tags = block.settings.filter_tags | split: ',' %}
+    {% for tags in filter_tags %}
+        {{ tags }}
+    {% endfor %}
     {% if collection.all_tags.size > 0 %}
     <ul class="tag-filters">
       {% for tag in collection.all_tags %}
@@ -26,3 +30,26 @@
     {% endif %}
   {% endpaginate %}
 </div>
+ {% schema %}
+    {
+        "blocks": [
+            {
+                "type": "filter_tag",
+                "name": "Filter Tag",
+                "settings": [
+                    {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Heading",
+                    "default": "Filter by"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "filter_tags",
+                        "label": "Tag"
+                    }
+                ]
+            }
+        ]
+    }
+ {% endschema %}
