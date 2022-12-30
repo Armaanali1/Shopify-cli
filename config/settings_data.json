@@ -16,7 +16,7 @@
             "type": "filter_tag",
             "settings": {
               "title": "Filter by",
-              "filter_tags": "test"
+              "filter_tags": "test,arman"
             }
           }
         },
