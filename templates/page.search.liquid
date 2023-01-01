@@ -1,0 +1,58 @@
+<div id="search" class="container">
+    <div class="search-box">
+        <input type="text" placeholder="Search" v-model="searchTerm" @change="search(searchTerm);">
+        <label v-html="message"></label>
+    </div>
+    <h1>Search Results</h1>
+    <div v-if="lastSearch != ''">
+        <div v-if="loading">Loading..</div>
+        <div class="search-results" v-if="items.length > 0">
+            <div class="search-result-item" v-for="item in items">
+                <a :href="item.url">
+                    <img :src="item.image" alt="" class="search-item-image">
+                    <div class="search-item-title" v-html="item.title"></div>
+                </a>
+            </div>
+        </div>
+        <div v-else>
+            <div v-else>Your search returned no matches.</div>
+        </div>
+    </div>
+</div>
+<script>
+    const SearchPageOption = {
+        name: 'search Page',
+        data() {
+            return {
+                searchTerm: '',
+                lastSearch: '',
+                items: [],
+                loading: false,
+                message: 'Please enter a search term'
+            }
+        },
+        methods: {
+            search(term) {
+                if (term != '') {
+                    this.lastSearch = term,
+                    this.loading = true;
+                    fetch(window.Shopify.routes.root + `search/suggest.json?q=${term}&resources[type]=product&resources[options][unavailable_products]=hide&resources[options][fields]=title,product_type,variants.title`)
+                    .then((response) => response.json())
+                    .then((suggestions) => {
+                        const productSuggestions = suggestions.resources.results.products;
+
+                        if (productSuggestions.length > 0) {
+                            this.items = productSuggestions;
+                            this.message = '';
+                        }
+                        this.loading = false;
+                    }
+                    );
+                }else {
+                    this.message = 'Please enter a search term'
+                }
+            }
+        }
+    }
+    const SearchPage = Vue.createApp(SearchPageOption).mount('#search')
+</script>

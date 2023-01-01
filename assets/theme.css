@@ -328,6 +328,13 @@ table tr td {
   opacity: 0;
 }
 
+
+.search-results {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 10px;
+}
+
 /*** Mobile ***/
 @media (max-width: 768px) {
     .header-inner {

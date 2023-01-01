@@ -10,14 +10,14 @@
   {{ 'theme.css' | asset_url | stylesheet_tag }}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
   {%- comment -%} {{ 'moneyformat.js' | asset_url | script_tag }} {%- endcomment -%}
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/vue@next"></script>
 </head>
 <body class="{{ template.name }}">
   {%- section 'header' -%}
   <main role="main">
     {{ content_for_layout }}
   </main>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   {{ 'url-parse.min.js' | asset_url | script_tag }}
   {{ 'theme.js' | asset_url | script_tag }}
