@@ -334,6 +334,36 @@ table tr td {
     grid-template-columns: repeat(4,1fr);
     gap: 10px;
 }
+.search-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+input.search-input {
+    width: 100%;
+    max-width: 500px;
+    height: 50px;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+.search-msg {
+    width: 100%;
+    text-align: center;
+}
+.search-enter {
+    background: transparent;
+    border: 0;
+    width: 50px;
+    height: 50px;
+    margin-left: -70px;
+    cursor: pointer;
+}
+.search-enter svg {
+    width: 35px;
+    height: 25px;
+}
 
 /*** Mobile ***/
 @media (max-width: 768px) {
